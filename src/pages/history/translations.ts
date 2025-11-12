@@ -1,0 +1,26 @@
+export const translations = {
+  en: {
+    title: 'Activity History',
+    description: 'Track all your activities and events',
+    filterAll: 'All',
+    filterProjects: 'Projects',
+    filterTasks: 'Tasks',
+    filterUsers: 'Users',
+    noHistory: 'No history items found',
+    typeProject: 'Project',
+    typeTask: 'Task',
+    typeUser: 'User',
+  },
+  ar: {
+    title: 'سجل النشاطات',
+    description: 'تتبع جميع أنشطتك وأحداثك',
+    filterAll: 'الكل',
+    filterProjects: 'المشاريع',
+    filterTasks: 'المهام',
+    filterUsers: 'المستخدمين',
+    noHistory: 'لم يتم العثور على عناصر السجل',
+    typeProject: 'مشروع',
+    typeTask: 'مهمة',
+    typeUser: 'مستخدم',
+  },
+};
