@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import { useLanguage } from '@/shared/context/LanguageContext';
-import { DesktopSidebar } from '../DesktopSidebar/DesktopSidebar';
-import { MobileNav } from '../MobileNav/MobileNav';
-import { LanguageSwitcher } from '../LanguageSwitcher/LanguageSwitcher';
+import { DesktopSidebar } from './components/DesktopSidebar';
+import { MobileHeader } from './components/MobileHeader';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -20,31 +18,25 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
   };
 
   return (
-    <div className="flex min-h-screen w-full">
-      <SidebarProvider>
-        {/* Mobile Nav */}
-        <MobileNav onLogout={handleLogout} />
+    <div className="min-h-screen w-full bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* Mobile Header with Hamburger */}
+      <MobileHeader onLogout={handleLogout} />
 
+      {/* Desktop Layout */}
+      <div className="hidden md:flex min-h-screen w-full">
         {/* Desktop Sidebar */}
-        <div className="hidden md:block">
-          <DesktopSidebar onLogout={handleLogout} side={isRTL ? 'right' : 'left'} />
-        </div>
+        <DesktopSidebar onLogout={handleLogout} />
 
         {/* Main Content */}
-        <SidebarInset className="flex-1 w-full">
-          {/* Desktop Header */}
-          <header className="hidden md:flex items-center gap-2 border-b border-border bg-background px-4 h-16">
-            <SidebarTrigger />
-            <div className="flex-1" />
-            <LanguageSwitcher />
-          </header>
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
+      </div>
 
-          {/* Page Content */}
-          <main className="flex-1 w-full">
-            {children}
-          </main>
-        </SidebarInset>
-      </SidebarProvider>
+      {/* Mobile Content */}
+      <main className="md:hidden">
+        {children}
+      </main>
     </div>
   );
 };
