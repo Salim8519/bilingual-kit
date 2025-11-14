@@ -1,0 +1,18 @@
+export const ar = {
+  welcome: 'مرحباً بعودتك',
+  subtitle: 'أدخل بيانات الاعتماد الخاصة بك للوصول إلى حسابك',
+  title: 'مرحباً بعودتك',
+  description: 'أدخل بيانات الاعتماد الخاصة بك للوصول إلى حسابك',
+  email: 'البريد الإلكتروني',
+  emailPlaceholder: 'email@example.com',
+  password: 'كلمة المرور',
+  passwordPlaceholder: '••••••••',
+  rememberMe: 'تذكرني',
+  login: 'تسجيل الدخول',
+  submit: 'تسجيل الدخول',
+  loggingIn: 'جاري تسجيل الدخول...',
+  emailRequired: 'البريد الإلكتروني مطلوب',
+  passwordRequired: 'كلمة المرور مطلوبة',
+  loginSuccess: 'تم تسجيل الدخول بنجاح!',
+  loginError: 'بيانات اعتماد غير صالحة. يرجى المحاولة مرة أخرى.',
+};

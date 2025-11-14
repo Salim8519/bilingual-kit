@@ -1,0 +1,18 @@
+export const en = {
+  welcome: 'Welcome Back',
+  subtitle: 'Enter your credentials to access your account',
+  title: 'Welcome Back',
+  description: 'Enter your credentials to access your account',
+  email: 'Email',
+  emailPlaceholder: 'your@email.com',
+  password: 'Password',
+  passwordPlaceholder: '••••••••',
+  rememberMe: 'Remember me',
+  login: 'Login',
+  submit: 'Sign In',
+  loggingIn: 'Logging in...',
+  emailRequired: 'Email is required',
+  passwordRequired: 'Password is required',
+  loginSuccess: 'Login successful!',
+  loginError: 'Invalid credentials. Please try again.',
+};
