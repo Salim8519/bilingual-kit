@@ -164,4 +164,12 @@ All colors MUST be HSL.
   * {
     transition: var(--transition-smooth);
   }
+
+  /* Disable sticky hover on touch devices for outline/ghost buttons */
+  @media (hover: none) and (pointer: coarse) {
+    .btn-no-touch-hover:hover {
+      background-color: transparent !important;
+      color: inherit !important;
+    }
+  }
 }
