@@ -1,5 +1,7 @@
 # Architecture: Single-Responsibility Principle (SRP) Template
 
+This app is mobile friendly first, and seniro poeple friendly too.
+
 ## Core Architecture Principles
 
 ### 1. Global Context System
