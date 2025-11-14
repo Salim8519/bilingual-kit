@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/shared/context/LanguageContext';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
+import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { HeroSection } from './components/HeroSection';
 import { FeaturesSection } from './components/FeaturesSection';
 import { GitHubSection } from './components/GitHubSection';
@@ -21,8 +22,9 @@ export default function Home() {
       className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background" 
       dir={language === 'ar' ? 'rtl' : 'ltr'}
     >
-      <div className="absolute top-4 ltr:right-4 rtl:left-4 z-10">
+      <div className="absolute top-4 ltr:right-4 rtl:left-4 z-10 flex gap-2">
         <LanguageSwitcher />
+        <ThemeToggle />
       </div>
       
       <div className="container mx-auto px-4 py-20">
