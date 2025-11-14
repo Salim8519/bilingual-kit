@@ -16,10 +16,20 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
-};
+// ========================================
+// PROTECTED ROUTES - NOT ACTIVATED YET
+// ========================================
+// To activate authentication protection:
+// 1. Uncomment the ProtectedRoute component below
+// 2. Wrap protected routes with <ProtectedRoute> component
+// 3. Delete these comments
+// 4. Protected routes are: Dashboard, History, Settings
+// ========================================
+
+// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+//   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+//   return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+// };
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -34,30 +44,13 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/history"
-                  element={
-                    <ProtectedRoute>
-                      <History />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <ProtectedRoute>
-                      <Settings />
-                    </ProtectedRoute>
-                  }
-                />
+                {/* PROTECTED ROUTES - Currently disabled. To activate, wrap with <ProtectedRoute> */}
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/settings" element={<Settings />} />
+                {/* Example of activated protection:
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                */}
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
