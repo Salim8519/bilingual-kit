@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from '@/components/NavLink';
 import { useLanguage } from '@/shared/context/LanguageContext';
+import { useGlobalAlert } from '@/shared/context/GlobalAlertContext';
 import { Menu, LogOut, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -15,9 +16,22 @@ interface MobileHeaderProps {
 
 export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
   const { language } = useLanguage();
+  const { showAlert } = useGlobalAlert();
   const t = translations[language];
   const [open, setOpen] = useState(false);
   const isRTL = language === 'ar';
+
+  const handleLogoutClick = () => {
+    setOpen(false);
+    showAlert({
+      title: t.logoutConfirmTitle,
+      message: t.logoutConfirmMessage,
+      confirmText: t.logoutConfirmButton,
+      type: 'warning',
+      buttonDelay: 1000,
+      onConfirm: onLogout,
+    });
+  };
 
   return (
     <header className="md:hidden bg-sidebar border-b border-sidebar-border sticky top-0 z-50">
@@ -56,10 +70,7 @@ export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
                   <ThemeToggle />
                   <Button
                     variant="ghost"
-                    onClick={() => {
-                      onLogout();
-                      setOpen(false);
-                    }}
+                    onClick={handleLogoutClick}
                     className="w-full justify-start gap-3"
                   >
                     <LogOut className="h-5 w-5" />
