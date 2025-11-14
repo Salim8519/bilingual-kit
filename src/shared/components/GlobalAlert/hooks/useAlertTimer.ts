@@ -1,25 +1,38 @@
 import { useState, useEffect } from 'react';
 
 export const useAlertTimer = (delay: number = 1000, isOpen: boolean) => {
-  const [showConfirmButton, setShowConfirmButton] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(delay);
 
   useEffect(() => {
     if (!isOpen) {
-      setShowConfirmButton(false);
+      setRemainingTime(delay);
       return;
     }
 
     if (delay === 0) {
-      setShowConfirmButton(true);
+      setRemainingTime(0);
       return;
     }
 
-    const timer = setTimeout(() => {
-      setShowConfirmButton(true);
-    }, delay);
+    setRemainingTime(delay);
+    const startTime = Date.now();
+    
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, delay - elapsed);
+      
+      setRemainingTime(remaining);
+      
+      if (remaining === 0) {
+        clearInterval(interval);
+      }
+    }, 100);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(interval);
   }, [delay, isOpen]);
 
-  return showConfirmButton;
+  const isReady = remainingTime === 0;
+  const secondsRemaining = Math.ceil(remainingTime / 1000);
+
+  return { isReady, secondsRemaining };
 };

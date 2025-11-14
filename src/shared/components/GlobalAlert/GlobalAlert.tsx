@@ -20,7 +20,7 @@ export const GlobalAlert: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language];
 
-  const showConfirmButton = useAlertTimer(
+  const { isReady, secondsRemaining } = useAlertTimer(
     alertConfig?.buttonDelay ?? 1000,
     isOpen
   );
@@ -41,6 +41,10 @@ export const GlobalAlert: React.FC = () => {
     return alertConfig.type === 'danger' ? 'destructive' : 'default';
   };
 
+  const confirmButtonText = isReady 
+    ? alertConfig.confirmText 
+    : `${alertConfig.confirmText} (${secondsRemaining}s)`;
+
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && hideAlert()}>
       <AlertDialogContent className="max-w-md">
@@ -58,17 +62,17 @@ export const GlobalAlert: React.FC = () => {
           <AlertDialogCancel onClick={handleCancel}>
             {t.cancel}
           </AlertDialogCancel>
-          {showConfirmButton && (
-            <AlertDialogAction
-              onClick={handleConfirm}
-              className={cn(
-                'transition-opacity duration-300',
-                getButtonVariant() === 'destructive' && 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-              )}
-            >
-              {alertConfig.confirmText}
-            </AlertDialogAction>
-          )}
+          <AlertDialogAction
+            onClick={handleConfirm}
+            disabled={!isReady}
+            className={cn(
+              'transition-all duration-300',
+              getButtonVariant() === 'destructive' && 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+              !isReady && 'opacity-50 cursor-not-allowed'
+            )}
+          >
+            {confirmButtonText}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
