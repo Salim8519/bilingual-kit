@@ -1,8 +1,13 @@
 ## للمطورين العرب 
 هذا التطبيق قالب شامل يحل معظم مشاكل نماذج اللغة الكبيرة (LLMs) مثل مشاكل RTL، عدم اتباع أنماط البرمجة الصحيحة، والتحكم المركزي في الثيم واللغة. انسخ هذا القالب والقواعد، وابدأ ڤايب كودنج! 🚀
 
-Try it out:
-https://react-bilingual.netlify.app/
+Try it out: https://react-bilingual.netlify.app/
+
+**Common LLM Mistakes to Avoid:**
+- Using `text-white`, `bg-white`, `text-black` directly instead of semantic design tokens
+- Not considering responsive design for mobile (always test layouts on small screens)
+- Improper quote escaping in JSX strings (use double quotes for strings with apostrophes)
+- Ignoring RTL support and Arabic text rendering
 
 
 # Architecture: Single-Responsibility Principle (SRP) Template

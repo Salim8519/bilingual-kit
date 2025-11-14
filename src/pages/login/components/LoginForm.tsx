@@ -24,17 +24,17 @@ export const LoginForm = () => {
   return (
     <Card className="w-full shadow-xl">
       <CardHeader className="space-y-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-1">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate('/')}
-            className="gap-2"
+            className="gap-1 px-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            {t.backToHome}
+            <span className="hidden sm:inline">{t.backToHome}</span>
           </Button>
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
