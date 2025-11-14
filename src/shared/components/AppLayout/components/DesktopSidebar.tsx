@@ -3,6 +3,7 @@ import { useLanguage } from '@/shared/context/LanguageContext';
 import { LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
+import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { navigationItems } from '@/shared/config/navigation';
 import { translations } from '../translations';
 
@@ -46,6 +47,7 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
       {/* Footer */}
       <div className="p-4 border-t border-sidebar-border space-y-3">
         <LanguageSwitcher />
+        <ThemeToggle />
         <Button
           variant="ghost"
           onClick={onLogout}

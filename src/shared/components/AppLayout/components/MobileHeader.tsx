@@ -5,6 +5,7 @@ import { Menu, LogOut, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
+import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { navigationItems } from '@/shared/config/navigation';
 import { translations } from '../translations';
 
@@ -51,7 +52,8 @@ export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
                   </NavLink>
                 ))}
 
-                <div className="mt-4 pt-4 border-t">
+                <div className="mt-4 pt-4 border-t space-y-2">
+                  <ThemeToggle />
                   <Button
                     variant="ghost"
                     onClick={() => {
