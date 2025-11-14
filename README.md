@@ -1,54 +1,36 @@
-# Welcome to your Lovable project
+# Project Development Guidelines
 
-## Project info
+## Core Principles
+- **Design System First**: ALWAYS use semantic tokens from `index.css` and `tailwind.config.ts`. NEVER use direct colors (e.g., `text-white`, `bg-black`)
+- **Separation of Concerns**: Keep components small, focused, and reusable
+- **Type Safety**: Use TypeScript strictly - no `any` types
+- **Internationalization**: Support both English and Arabic with RTL/LTR layouts
 
-**URL**: https://lovable.dev/projects/28589d60-a08b-4851-9485-3ca836afb0c5
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/28589d60-a08b-4851-9485-3ca836afb0c5) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## Folder Structure Rules
+Each page/component MUST follow this structure:
+```
+pages/[page-name]/
+  ├── [page-name].tsx          # Main page component
+  ├── components/              # Page-specific components
+  ├── hooks/                   # Page-specific hooks
+  ├── utils/                   # Page-specific utilities
+  └── translations/
+      ├── en.ts               # English translations
+      ├── ar.ts               # Arabic translations
+      └── index.ts            # Export both languages
 ```
 
-**Edit a file directly in GitHub**
+## Must-Follow Rules
+1. **Translations**: ALWAYS isolate translations - each component/page has its own `translations/` folder
+2. **Design Tokens**: Use HSL colors only, defined in design system - no hardcoded colors
+3. **Theming**: Support both light and dark modes via ThemeContext
+4. **Language**: Support RTL (Arabic) and LTR (English) via LanguageContext
+5. **Components**: Customize shadcn components with variants, never inline styles
+6. **Semantic HTML**: Use proper HTML5 tags for accessibility and SEO
+7. **Responsive**: Mobile-first approach, test all breakpoints
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Tech Stack
+React 18 • TypeScript • Vite • Tailwind CSS • shadcn/ui • React Router • React Query
 
 ## What technologies are used for this project?
 
