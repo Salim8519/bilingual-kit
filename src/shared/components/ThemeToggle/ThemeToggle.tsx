@@ -14,7 +14,7 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="sm"
       onClick={toggleTheme}
-      className="gap-2 active:scale-95 transition-transform"
+      className="gap-2 transition-all duration-200"
       aria-label={t.toggleTheme}
     >
       {theme === 'light' ? (

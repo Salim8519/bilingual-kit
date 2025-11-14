@@ -16,7 +16,7 @@ export const LanguageSwitcher = () => {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="gap-2 active:scale-95 transition-transform"
+      className="gap-2 transition-all duration-200"
       aria-label={t.switchLanguage}
     >
       <Globe className="h-4 w-4" />
