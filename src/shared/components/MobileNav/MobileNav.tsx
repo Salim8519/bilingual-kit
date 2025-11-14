@@ -24,8 +24,8 @@ export const MobileNav = ({ onLogout }: MobileNavProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="md:hidden bg-sidebar border-b border-sidebar-border">
-      <div className="flex items-center justify-between h-16 px-4">
+    <header className="md:hidden bg-sidebar border-b border-sidebar-border w-full">
+      <div className="flex items-center justify-between h-16 px-4 w-full">
         <h1 className="text-lg font-bold text-sidebar-foreground">{t.appName}</h1>
         
         <div className="flex items-center gap-2">
