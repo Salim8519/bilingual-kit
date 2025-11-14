@@ -9,7 +9,7 @@ export const en = {
   themeDesc: 'Switch between light and dark mode',
   about: 'About',
   aboutDesc: 'Application information and version',
-  appName: 'Bilingual Template- AR & EN',
+  appName: 'My App',
   version: 'Version',
   description: 'A modern bilingual web application template supporting Arabic and English with full RTL support.',
   preferences: 'Preferences',
