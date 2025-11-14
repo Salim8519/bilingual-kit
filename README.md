@@ -8,11 +8,13 @@
 // Single source of truth for language & theme
 LanguageContext → { language: 'en' | 'ar', dir: 'ltr' | 'rtl' }
 ThemeContext    → { theme: 'light' | 'dark' }
+GlobalAlertContext → showAlert({ title, message, confirmText, type, buttonDelay, onConfirm })
 ```
 
 - **ONE** global language provider controls all translations
 - **ONE** global theme provider controls light/dark mode
-- ALL pages and components consume via hooks: `useLanguage()`, `useTheme()`
+- **GlobalAlert**: Use `useGlobalAlert().showAlert()` for confirmation dialogs with timed buttons (default 1s delay). Supports `type: 'danger' | 'warning' | 'info'` and custom `buttonDelay` (0 = instant).
+- ALL pages and components consume via hooks: `useLanguage()`, `useTheme()`, `useGlobalAlert()`
 
 ### 2. Strict Folder Structure (MANDATORY)
 
