@@ -15,4 +15,6 @@ export const ar = {
   passwordRequired: 'كلمة المرور مطلوبة',
   loginSuccess: 'تم تسجيل الدخول بنجاح!',
   loginError: 'بيانات اعتماد غير صالحة. يرجى المحاولة مرة أخرى.',
+  fillDemo: 'ملء بيانات تجريبية',
+  backToHome: 'العودة للصفحة الرئيسية',
 };
