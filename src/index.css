@@ -146,6 +146,13 @@ All colors MUST be HSL.
     @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
   }
 
+  /* Remove focus outline after mouse/touch interaction */
+  button:focus:not(:focus-visible),
+  a:focus:not(:focus-visible),
+  [role="button"]:focus:not(:focus-visible) {
+    @apply outline-none ring-0;
+  }
+
   /* Remove focus ring on touch/click for mobile */
   @media (hover: none) and (pointer: coarse) {
     *:focus {
