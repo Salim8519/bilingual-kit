@@ -17,4 +17,5 @@ export const en = {
   loginError: 'Invalid credentials. Please try again.',
   fillDemo: 'Fill Demo Credentials',
   backToHome: 'Back to Home',
+  demoFilled: 'Demo credentials filled',
 };

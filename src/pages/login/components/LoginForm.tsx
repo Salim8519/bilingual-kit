@@ -8,12 +8,14 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { useLoginForm } from '../hooks/useLoginForm';
 import { translations } from '../translations';
 import { ArrowLeft } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 export const LoginForm = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const t = translations[language];
   const { email, setEmail, password, setPassword, handleSubmit, fillDemoCredentials } = useLoginForm();
+  const { toast } = useToast();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +79,10 @@ export const LoginForm = () => {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={fillDemoCredentials}
+            onClick={() => {
+              fillDemoCredentials();
+              toast({ description: t.demoFilled });
+            }}
           >
             {t.fillDemo}
           </Button>
