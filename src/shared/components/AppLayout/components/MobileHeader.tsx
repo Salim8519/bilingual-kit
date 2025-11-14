@@ -45,7 +45,7 @@ export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side={isRTL ? 'left' : 'right'} className="w-72 flex flex-col">
+          <SheetContent side="right" className="w-72 flex flex-col">
             <SheetHeader className="shrink-0">
               <SheetTitle>{t.menu}</SheetTitle>
             </SheetHeader>
