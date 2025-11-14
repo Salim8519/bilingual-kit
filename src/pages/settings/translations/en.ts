@@ -1,0 +1,17 @@
+export const en = {
+  title: 'Settings',
+  subtitle: 'Manage your application preferences',
+  appearance: 'Appearance',
+  appearanceDesc: 'Customize how the app looks and feels',
+  language: 'Language',
+  languageDesc: 'Choose your preferred language',
+  theme: 'Theme',
+  themeDesc: 'Switch between light and dark mode',
+  about: 'About',
+  aboutDesc: 'Application information and version',
+  appName: 'Bilingual Template- AR & EN',
+  version: 'Version',
+  description: 'A modern bilingual web application template supporting Arabic and English with full RTL support.',
+  preferences: 'Preferences',
+  preferencesDesc: 'Adjust your account settings',
+};

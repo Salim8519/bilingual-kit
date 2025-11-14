@@ -3,6 +3,7 @@ export const ar = {
   menu: 'القائمة',
   dashboard: 'لوحة التحكم',
   history: 'السجل',
+  settings: 'الإعدادات',
   logout: 'تسجيل الخروج',
   logoutConfirmTitle: 'تأكيد تسجيل الخروج',
   logoutConfirmMessage: 'هل أنت متأكد أنك تريد تسجيل الخروج؟ ستحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى حسابك.',
