@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
+import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { useLoginForm } from '../hooks/useLoginForm';
 import { translations } from '../translations';
 
@@ -22,8 +23,9 @@ export const LoginForm = () => {
   return (
     <Card className="w-full shadow-xl">
       <CardHeader className="space-y-4">
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
           <LanguageSwitcher />
+          <ThemeToggle />
         </div>
         <CardTitle className="text-2xl text-center">{t.title}</CardTitle>
         <CardDescription className="text-center">{t.description}</CardDescription>
