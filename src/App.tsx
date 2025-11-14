@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "@/shared/context/LanguageContext";
 import { GlobalAlertProvider } from "@/shared/context/GlobalAlertContext";
 import { GlobalAlert } from "@/shared/components/GlobalAlert/GlobalAlert";
-import Index from "./pages/Index";
+import Index from "./pages/home/home";
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/dashboard";
 import History from "./pages/history/history";
