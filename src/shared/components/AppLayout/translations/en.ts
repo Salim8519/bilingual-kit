@@ -1,5 +1,5 @@
 export const en = {
-  appName: 'My App',
+  appName: 'Bilingual Template- AR & EN',
   menu: 'Menu',
   dashboard: 'Dashboard',
   history: 'History',

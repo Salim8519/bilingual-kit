@@ -1,5 +1,5 @@
 export const ar = {
-  appName: 'تطبيقي',
+  appName: 'قالب ثنائي اللغة - عربي وإنجليزي',
   menu: 'القائمة',
   dashboard: 'لوحة التحكم',
   history: 'السجل',
