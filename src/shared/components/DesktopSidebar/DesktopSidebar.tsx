@@ -20,16 +20,17 @@ import { translations } from './translations';
 
 interface DesktopSidebarProps {
   onLogout?: () => void;
+  side?: 'left' | 'right';
 }
 
-export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
+export const DesktopSidebar = ({ onLogout, side = 'left' }: DesktopSidebarProps) => {
   const { language } = useLanguage();
   const { state } = useSidebar();
   const t = translations[language];
   const isCollapsed = state === 'collapsed';
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar side={side} collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border p-4">
         {!isCollapsed && (
           <h1 className="text-lg font-bold text-sidebar-foreground">{t.appName}</h1>
