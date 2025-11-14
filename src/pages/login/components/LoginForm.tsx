@@ -7,12 +7,13 @@ import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageS
 import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { useLoginForm } from '../hooks/useLoginForm';
 import { translations } from '../translations';
+import { ArrowLeft } from 'lucide-react';
 
 export const LoginForm = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const t = translations[language];
-  const { email, setEmail, password, setPassword, handleSubmit } = useLoginForm();
+  const { email, setEmail, password, setPassword, handleSubmit, fillDemoCredentials } = useLoginForm();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,9 +24,20 @@ export const LoginForm = () => {
   return (
     <Card className="w-full shadow-xl">
       <CardHeader className="space-y-4">
-        <div className="flex justify-end gap-2">
-          <LanguageSwitcher />
-          <ThemeToggle />
+        <div className="flex justify-between items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/')}
+            className="gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            {t.backToHome}
+          </Button>
+          <div className="flex gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
         </div>
         <CardTitle className="text-2xl text-center">{t.title}</CardTitle>
         <CardDescription className="text-center">{t.description}</CardDescription>
@@ -60,6 +72,14 @@ export const LoginForm = () => {
           </div>
           <Button type="submit" className="w-full h-11">
             {t.submit}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={fillDemoCredentials}
+          >
+            {t.fillDemo}
           </Button>
         </form>
       </CardContent>

@@ -9,11 +9,17 @@ export const useLoginForm = () => {
     localStorage.setItem('isAuthenticated', 'true');
   };
 
+  const fillDemoCredentials = () => {
+    setEmail('demo@example.com');
+    setPassword('demo123');
+  };
+
   return {
     email,
     setEmail,
     password,
     setPassword,
     handleSubmit,
+    fillDemoCredentials,
   };
 };
