@@ -32,7 +32,7 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
 
   return (
     <aside
-      className={`w-64 bg-sidebar border-sidebar-border flex flex-col ${
+      className={`fixed top-0 ${isRTL ? 'right-0' : 'left-0'} h-screen w-64 bg-sidebar border-sidebar-border flex flex-col z-40 ${
         isRTL ? 'border-l' : 'border-r'
       }`}
     >

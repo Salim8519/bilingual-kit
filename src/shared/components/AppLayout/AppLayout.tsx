@@ -23,12 +23,12 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
       <MobileHeader onLogout={handleLogout} />
 
       {/* Desktop Layout */}
-      <div className="hidden md:flex min-h-screen w-full">
-        {/* Desktop Sidebar */}
+      <div className="hidden md:block min-h-screen w-full">
+        {/* Desktop Sidebar - Fixed */}
         <DesktopSidebar onLogout={handleLogout} />
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-auto">
+        {/* Main Content - With margin to account for fixed sidebar */}
+        <main className={`min-h-screen ${isRTL ? 'mr-64' : 'ml-64'}`}>
           {children}
         </main>
       </div>
