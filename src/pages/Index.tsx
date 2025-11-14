@@ -67,7 +67,7 @@ const Index = () => {
           </Button>
 
           <div className="mt-20">
-            <h2 className="text-2xl font-bold mb-8">{t.features}</h2>
+            <h2 className="text-2xl font-bold mb-8 text-foreground">{t.features}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[t.feature1, t.feature2, t.feature3, t.feature4].map((feature, index) => (
                 <div
@@ -77,7 +77,7 @@ const Index = () => {
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <span className="text-2xl font-bold text-primary">{index + 1}</span>
                   </div>
-                  <h3 className="font-semibold text-lg">{feature}</h3>
+                  <h3 className="font-semibold text-lg text-card-foreground">{feature}</h3>
                 </div>
               ))}
             </div>
