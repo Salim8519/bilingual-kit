@@ -1,55 +1,92 @@
-# Project Development Guidelines
+# Development Standards & Architecture
 
-## Core Principles
-- **Design System First**: ALWAYS use semantic tokens from `index.css` and `tailwind.config.ts`. NEVER use direct colors (e.g., `text-white`, `bg-black`)
-- **Separation of Concerns**: Keep components small, focused, and reusable
-- **Type Safety**: Use TypeScript strictly - no `any` types
-- **Internationalization**: Support both English and Arabic with RTL/LTR layouts
+## Critical Rules (MUST FOLLOW)
 
-## Folder Structure Rules
-Each page/component MUST follow this structure:
+### 1. Design System - NO EXCEPTIONS
+```tsx
+// ❌ WRONG - Direct color usage
+<div className="text-white bg-black border-gray-500">
+
+// ✅ CORRECT - Semantic tokens only
+<div className="text-foreground bg-background border-border">
 ```
-pages/[page-name]/
-  ├── [page-name].tsx          # Main page component
-  ├── components/              # Page-specific components
-  ├── hooks/                   # Page-specific hooks
-  ├── utils/                   # Page-specific utilities
+- ALL colors MUST be HSL format in `index.css`
+- NEVER use hardcoded colors (`text-white`, `bg-[#fff]`, `text-gray-500`)
+- Define new colors in design system first, then use them
+- Use `tailwind.config.ts` to extend theme with semantic tokens
+
+### 2. File Structure (STRICT)
+```
+pages/[feature]/
+  ├── [feature].tsx           # Page entry point
+  ├── components/             # Feature-specific components ONLY
+  ├── hooks/                  # Feature-specific hooks
+  ├── utils/                  # Feature-specific utilities
   └── translations/
-      ├── en.ts               # English translations
-      ├── ar.ts               # Arabic translations
-      └── index.ts            # Export both languages
+      ├── en.ts              # English translations
+      ├── ar.ts              # Arabic translations  
+      └── index.ts           # Must export both languages
 ```
+- NEVER mix page logic with components
+- NEVER import from sibling page folders - use `shared/`
+- Each translation key MUST exist in both `en.ts` AND `ar.ts`
 
-## Must-Follow Rules
-1. **Translations**: ALWAYS isolate translations - each component/page has its own `translations/` folder
-2. **Design Tokens**: Use HSL colors only, defined in design system - no hardcoded colors
-3. **Theming**: Support both light and dark modes via ThemeContext
-4. **Language**: Support RTL (Arabic) and LTR (English) via LanguageContext
-5. **Components**: Customize shadcn components with variants, never inline styles
-6. **Semantic HTML**: Use proper HTML5 tags for accessibility and SEO
-7. **Responsive**: Mobile-first approach, test all breakpoints
+### 3. TypeScript (ZERO TOLERANCE)
+```tsx
+// ❌ FORBIDDEN
+const data: any = response;
+function handleClick(e: any) { }
+
+// ✅ REQUIRED
+interface ApiResponse { id: string; name: string; }
+const data: ApiResponse = response;
+function handleClick(e: React.MouseEvent<HTMLButtonElement>) { }
+```
+- NO `any` types - use `unknown` if truly unknown, then type-guard
+- ALWAYS define interfaces for props, API responses, context values
+- Use discriminated unions for complex state
+
+### 4. Internationalization (MANDATORY)
+- EVERY text string MUST go through translation system
+- Test ALL features in both LTR (en) and RTL (ar) modes
+- Never assume left-to-right layout
+- Use `isRTL` checks for directional logic
+
+### 5. Context Usage
+```tsx
+// ✅ ALWAYS use these contexts
+const { language, setLanguage, dir } = useLanguage();
+const { theme, toggleTheme } = useTheme();
+```
+- NEVER localStorage.getItem directly for theme/language
+- Use context hooks for consistent state management
+
+## Common Mistakes to AVOID
+
+1. **Button Variants**: Customize in design system, not inline
+2. **String Escaping**: Use `"text"` not `'text'` when text contains apostrophes
+3. **Import Paths**: Use `@/` alias, never relative paths like `../../../`
+4. **Component Size**: Max 200 lines - split if larger
+5. **Responsive Design**: Test mobile (375px), tablet (768px), desktop (1440px)
 
 ## Tech Stack
-React 18 • TypeScript • Vite • Tailwind CSS • shadcn/ui • React Router • React Query
+React 18.3 • TypeScript 5 • Vite 5 • Tailwind CSS 3 • Radix UI • React Router 6 • TanStack Query 5
 
-## What technologies are used for this project?
+## Local Development
 
-This project is built with:
+```bash
+# Install dependencies
+npm install
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Start dev server (http://localhost:8080)
+npm run dev
 
-## How can I deploy this project?
+# Type checking
+npm run build
 
-Simply open [Lovable](https://lovable.dev/projects/28589d60-a08b-4851-9485-3ca836afb0c5) and click on Share -> Publish.
+# Lint code
+npx eslint src/
+```
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Project URL
+https://lovable.dev/projects/28589d60-a08b-4851-9485-3ca836afb0c5
