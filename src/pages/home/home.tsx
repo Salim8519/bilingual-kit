@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div 
-      className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background" 
+      className="min-h-screen bg-background" 
       dir={language === 'ar' ? 'rtl' : 'ltr'}
     >
       <div className="absolute top-4 ltr:right-4 rtl:left-4 z-10 flex gap-2">
