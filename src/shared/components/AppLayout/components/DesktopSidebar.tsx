@@ -49,10 +49,12 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
               <NavLink
                 key={item.path}
                 to={item.path}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors ${
+                  isRTL ? 'flex-row-reverse' : ''
+                }`}
                 activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
               >
-                <item.icon className="h-5 w-5" />
+                <item.icon className="h-5 w-5 shrink-0" />
                 <span>{t[item.labelKey]}</span>
               </NavLink>
             ))}
@@ -67,9 +69,11 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
         <Button
           variant="ghost"
           onClick={handleLogoutClick}
-          className="w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-accent"
+          className={`w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-accent ${
+            isRTL ? 'flex-row-reverse' : ''
+          }`}
         >
-          <LogOut className="h-5 w-5" />
+          <LogOut className="h-5 w-5 shrink-0" />
           <span>{t.logout}</span>
         </Button>
       </div>
