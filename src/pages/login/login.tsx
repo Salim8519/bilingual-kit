@@ -7,11 +7,11 @@ const Login = () => {
   const t = translations[language];
 
   return (
-    <div className="min-h-screen w-full bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <main className="min-h-screen w-full bg-background flex items-center justify-center p-4" role="main">
+      <section className="w-full max-w-md" aria-label={language === 'ar' ? 'تسجيل الدخول' : 'Login'}>
         <LoginForm />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

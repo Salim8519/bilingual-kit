@@ -21,40 +21,47 @@ export default function Home() {
     <div 
       className="min-h-screen bg-background" 
       dir={language === 'ar' ? 'rtl' : 'ltr'}
+      lang={language}
     >
-      <div className="absolute top-4 ltr:right-4 rtl:left-4 z-10 flex gap-2">
+      <header className="absolute top-4 ltr:right-4 rtl:left-4 z-10 flex gap-2">
         <LanguageSwitcher />
         <ThemeToggle />
-      </div>
+      </header>
       
-      <div className="container mx-auto px-4 py-20">
+      <main className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <HeroSection
-            welcome={t.welcome}
-            appName={t.appName}
-            description={t.description}
-            getStarted={t.getStarted}
-            onGetStarted={() => navigate('/login')}
-          />
+          <section aria-label={language === 'ar' ? 'القسم الرئيسي' : 'Hero Section'}>
+            <HeroSection
+              welcome={t.welcome}
+              appName={t.appName}
+              description={t.description}
+              getStarted={t.getStarted}
+              onGetStarted={() => navigate('/login')}
+            />
+          </section>
 
-          <FeaturesSection
-            title={t.features}
-            features={[t.feature1, t.feature2, t.feature3, t.feature4]}
-          />
+          <section aria-label={language === 'ar' ? 'المميزات' : 'Features Section'}>
+            <FeaturesSection
+              title={t.features}
+              features={[t.feature1, t.feature2, t.feature3, t.feature4]}
+            />
+          </section>
 
-          <GitHubSection
-            title={t.getTheCode}
-            description={t.repoDescription}
-            cloneText={t.cloneRepo}
-            forkText={t.forkRepo}
-            downloadText={t.downloadZip}
-            viewButtonText={t.viewOnGitHub}
-            madeByText={t.madeBy}
-            developerName={t.developer}
-            repoUrl={GITHUB_REPO_URL}
-          />
+          <section aria-label={language === 'ar' ? 'قسم GitHub' : 'GitHub Section'}>
+            <GitHubSection
+              title={t.getTheCode}
+              description={t.repoDescription}
+              cloneText={t.cloneRepo}
+              forkText={t.forkRepo}
+              downloadText={t.downloadZip}
+              viewButtonText={t.viewOnGitHub}
+              madeByText={t.madeBy}
+              developerName={t.developer}
+              repoUrl={GITHUB_REPO_URL}
+            />
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
