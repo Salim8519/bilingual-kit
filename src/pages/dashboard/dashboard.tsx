@@ -1,6 +1,4 @@
 import { useLanguage } from '@/shared/context/LanguageContext';
-import { Navigation } from '@/shared/components/Navigation/Navigation';
-import { useNavigate } from 'react-router-dom';
 import { translations } from './translations';
 import { StatCard } from './components/StatCard';
 import { ActivityCard } from './components/ActivityCard';
@@ -9,13 +7,7 @@ import { Users, Folder, CheckCircle2, Clock } from 'lucide-react';
 
 const Dashboard = () => {
   const { language } = useLanguage();
-  const navigate = useNavigate();
   const t = translations[language];
-
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    navigate('/login');
-  };
 
   const stats = getDashboardStats(language);
   const activities = getRecentActivities(language);
@@ -28,9 +20,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation onLogout={handleLogout} />
-      <main className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t.welcome}</h1>
           <p className="text-muted-foreground text-lg">{t.overview}</p>
@@ -54,8 +44,7 @@ const Dashboard = () => {
             viewDetailsLabel={t.viewDetails}
           />
         </div>
-      </main>
-    </div>
+      </div>
   );
 };
 
