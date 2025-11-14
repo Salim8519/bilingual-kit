@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/dashboard";
 import History from "./pages/history/history";
+import Settings from "./pages/settings/settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <History />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Settings />
                   </ProtectedRoute>
                 }
               />
