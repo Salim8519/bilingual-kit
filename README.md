@@ -1,76 +1,115 @@
-# Development Standards & Architecture
+# Architecture: Single-Responsibility Principle (SRP) Template
 
-## Critical Rules (MUST FOLLOW)
+## Core Architecture Principles
 
-### 1. Design System - NO EXCEPTIONS
+### 1. Global Context System
 ```tsx
-// ❌ WRONG - Direct color usage
-<div className="text-white bg-black border-gray-500">
-
-// ✅ CORRECT - Semantic tokens only
-<div className="text-foreground bg-background border-border">
+// Single source of truth for language & theme
+LanguageContext → { language: 'en' | 'ar', dir: 'ltr' | 'rtl' }
+ThemeContext    → { theme: 'light' | 'dark' }
 ```
-- ALL colors MUST be HSL format in `index.css`
-- NEVER use hardcoded colors (`text-white`, `bg-[#fff]`, `text-gray-500`)
-- Define new colors in design system first, then use them
-- Use `tailwind.config.ts` to extend theme with semantic tokens
+- **ONE** global language provider controls all translations
+- **ONE** global theme provider controls light/dark mode
+- ALL pages and components consume via hooks: `useLanguage()`, `useTheme()`
 
-### 2. File Structure (STRICT)
+### 2. Strict Folder Structure (MANDATORY)
 ```
-pages/[feature]/
-  ├── [feature].tsx           # Page entry point
-  ├── components/             # Feature-specific components ONLY
-  ├── hooks/                  # Feature-specific hooks
-  ├── utils/                  # Feature-specific utilities
-  └── translations/
-      ├── en.ts              # English translations
-      ├── ar.ts              # Arabic translations  
-      └── index.ts           # Must export both languages
+src/
+├── pages/[feature]/              # Each page is isolated
+│   ├── [feature].tsx             # ORCHESTRATOR ONLY - composes components
+│   ├── components/               # Feature-specific UI components
+│   ├── hooks/                    # Feature-specific custom hooks
+│   ├── utils/                    # Feature-specific utilities
+│   └── translations/
+│       ├── en.ts                 # English translations object
+│       ├── ar.ts                 # Arabic translations object
+│       └── index.ts              # Export translations[language]
+│
+└── shared/                       # Cross-feature reusables
+    ├── components/[Component]/   # Same structure as pages
+    │   ├── [Component].tsx
+    │   ├── components/
+    │   ├── hooks/
+    │   ├── utils/
+    │   └── translations/
+    │       ├── en.ts
+    │       ├── ar.ts
+    │       └── index.ts
+    ├── context/                  # Global contexts (Language, Theme)
+    ├── config/                   # Navigation, constants
+    └── hooks/                    # Global hooks
 ```
-- NEVER mix page logic with components
-- NEVER import from sibling page folders - use `shared/`
-- Each translation key MUST exist in both `en.ts` AND `ar.ts`
 
-### 3. TypeScript (ZERO TOLERANCE)
+### 3. Orchestrator Pattern (CRITICAL)
+```tsx
+// ❌ WRONG - Business logic in page file
+export default function Dashboard() {
+  const [data, setData] = useState([]);
+  const handleSubmit = () => { /* logic */ };
+  return <div>...</div>;
+}
+
+// ✅ CORRECT - Page is pure composition
+export default function Dashboard() {
+  return (
+    <AppLayout>
+      <StatsGrid />
+      <RecentActivity />
+    </AppLayout>
+  );
+}
+```
+- Page files ONLY import and arrange components
+- NO hooks, logic, or translations in main page file
+- Extract ALL logic → components/, hooks/, utils/
+
+### 4. Translation System (STRICT)
+```tsx
+// pages/dashboard/translations/en.ts
+export const dashboardTranslations = {
+  title: "Dashboard",
+  welcome: "Welcome back"
+};
+
+// pages/dashboard/translations/ar.ts
+export const dashboardTranslations = {
+  title: "لوحة التحكم",
+  welcome: "مرحبا بعودتك"
+};
+
+// Usage in component
+const { language } = useLanguage();
+const t = translations[language];
+return <h1>{t.title}</h1>;
+```
+- NEVER hardcode strings - use translation objects
+- EVERY key in `en.ts` MUST exist in `ar.ts`
+- Test RTL layout for Arabic (`dir="rtl"`)
+
+### 5. Design System (NO EXCEPTIONS)
 ```tsx
 // ❌ FORBIDDEN
-const data: any = response;
-function handleClick(e: any) { }
+<Button className="bg-blue-500 text-white">
 
 // ✅ REQUIRED
-interface ApiResponse { id: string; name: string; }
-const data: ApiResponse = response;
-function handleClick(e: React.MouseEvent<HTMLButtonElement>) { }
+<Button variant="default">  // Uses semantic tokens from index.css
 ```
-- NO `any` types - use `unknown` if truly unknown, then type-guard
-- ALWAYS define interfaces for props, API responses, context values
+- Colors: HSL format in `index.css` → use semantic tokens (`primary`, `foreground`)
+- NO direct colors: `text-white`, `bg-[#hex]`, `text-gray-500`
+- Customize shadcn components via variants, not inline classes
+
+## Navigation Architecture
+- **Desktop**: Sidebar from `shared/components/AppLayout/components/DesktopSidebar.tsx`
+- **Mobile**: Hamburger menu from `shared/components/AppLayout/components/MobileHeader.tsx`
+- **Config**: Both read from `shared/config/navigation.ts` (single source)
+
+## TypeScript Rules
+- NO `any` types - use proper interfaces
+- Define types for: props, API responses, context values, hooks return
 - Use discriminated unions for complex state
 
-### 4. Internationalization (MANDATORY)
-- EVERY text string MUST go through translation system
-- Test ALL features in both LTR (en) and RTL (ar) modes
-- Never assume left-to-right layout
-- Use `isRTL` checks for directional logic
-
-### 5. Context Usage
-```tsx
-// ✅ ALWAYS use these contexts
-const { language, setLanguage, dir } = useLanguage();
-const { theme, toggleTheme } = useTheme();
-```
-- NEVER localStorage.getItem directly for theme/language
-- Use context hooks for consistent state management
-
-## Common Mistakes to AVOID
-
-1. **Button Variants**: Customize in design system, not inline
-2. **String Escaping**: Use `"text"` not `'text'` when text contains apostrophes
-3. **Import Paths**: Use `@/` alias, never relative paths like `../../../`
-4. **Component Size**: Max 200 lines - split if larger
-5. **Responsive Design**: Test mobile (375px), tablet (768px), desktop (1440px)
-
 ## Tech Stack
-React 18.3 • TypeScript 5 • Vite 5 • Tailwind CSS 3 • Radix UI • React Router 6 • TanStack Query 5
+React 18 • TypeScript 5 • Vite • Tailwind CSS • Radix UI (shadcn) • React Router 6
 
 ## Local Development
 
