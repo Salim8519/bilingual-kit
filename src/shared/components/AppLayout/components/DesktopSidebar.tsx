@@ -24,7 +24,7 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
       title: t.logoutConfirmTitle,
       message: t.logoutConfirmMessage,
       confirmText: t.logoutConfirmButton,
-      type: 'warning',
+      type: 'danger',
       buttonDelay: 1000,
       onConfirm: onLogout,
     });
