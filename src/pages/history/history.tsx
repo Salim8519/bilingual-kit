@@ -1,6 +1,4 @@
 import { useLanguage } from '@/shared/context/LanguageContext';
-import { Navigation } from '@/shared/components/Navigation/Navigation';
-import { useNavigate } from 'react-router-dom';
 import { translations } from './translations';
 import { HistoryItem } from './components/HistoryItem';
 import { HistoryFilters } from './components/HistoryFilters';
@@ -8,13 +6,7 @@ import { useHistoryData } from './hooks/useHistoryData';
 
 const History = () => {
   const { language } = useLanguage();
-  const navigate = useNavigate();
   const t = translations[language];
-
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    navigate('/login');
-  };
 
   const { historyItems, activeFilter, setActiveFilter } = useHistoryData(language);
 
@@ -33,9 +25,7 @@ const History = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation onLogout={handleLogout} />
-      <main className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t.title}</h1>
           <p className="text-muted-foreground text-lg">{t.description}</p>
@@ -56,8 +46,7 @@ const History = () => {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
   );
 };
 
