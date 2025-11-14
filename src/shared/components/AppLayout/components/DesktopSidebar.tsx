@@ -3,6 +3,7 @@ import { useLanguage } from '@/shared/context/LanguageContext';
 import { useGlobalAlert } from '@/shared/context/GlobalAlertContext';
 import { LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
 import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { navigationItems } from '@/shared/config/navigation';
@@ -41,21 +42,23 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4">
-        <div className="space-y-1">
-          {navigationItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
-              activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-            >
-              <item.icon className="h-5 w-5" />
-              <span>{t[item.labelKey]}</span>
-            </NavLink>
-          ))}
-        </div>
-      </nav>
+      <ScrollArea className="flex-1 px-4">
+        <nav className="py-4">
+          <div className="space-y-1">
+            {navigationItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+                activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+              >
+                <item.icon className="h-5 w-5" />
+                <span>{t[item.labelKey]}</span>
+              </NavLink>
+            ))}
+          </div>
+        </nav>
+      </ScrollArea>
 
       {/* Footer */}
       <div className="p-4 border-t border-sidebar-border space-y-3">
