@@ -1,5 +1,6 @@
 import { NavLink } from '@/components/NavLink';
 import { useLanguage } from '@/shared/context/LanguageContext';
+import { useGlobalAlert } from '@/shared/context/GlobalAlertContext';
 import { LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
@@ -13,8 +14,20 @@ interface DesktopSidebarProps {
 
 export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
   const { language } = useLanguage();
+  const { showAlert } = useGlobalAlert();
   const t = translations[language];
   const isRTL = language === 'ar';
+
+  const handleLogoutClick = () => {
+    showAlert({
+      title: t.logoutConfirmTitle,
+      message: t.logoutConfirmMessage,
+      confirmText: t.logoutConfirmButton,
+      type: 'warning',
+      buttonDelay: 1000,
+      onConfirm: onLogout,
+    });
+  };
 
   return (
     <aside
@@ -50,7 +63,7 @@ export const DesktopSidebar = ({ onLogout }: DesktopSidebarProps) => {
         <ThemeToggle />
         <Button
           variant="ghost"
-          onClick={onLogout}
+          onClick={handleLogoutClick}
           className="w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-accent"
         >
           <LogOut className="h-5 w-5" />
