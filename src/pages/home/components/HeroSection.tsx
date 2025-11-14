@@ -19,7 +19,7 @@ export const HeroSection = ({
   return (
     <div className="mb-8">
       <p className="text-lg text-muted-foreground mb-2">{welcome}</p>
-      <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent leading-tight py-2">
+      <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent leading-tight py-4">
         {appName}
       </h1>
       <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
