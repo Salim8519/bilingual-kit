@@ -1,0 +1,74 @@
+import { useState } from 'react';
+import { NavLink } from '@/components/NavLink';
+import { useLanguage } from '@/shared/context/LanguageContext';
+import { Menu, LogOut, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
+import { navigationItems } from '@/shared/config/navigation';
+import { translations } from '../translations';
+
+interface MobileHeaderProps {
+  onLogout: () => void;
+}
+
+export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
+  const { language } = useLanguage();
+  const t = translations[language];
+  const [open, setOpen] = useState(false);
+  const isRTL = language === 'ar';
+
+  return (
+    <header className="md:hidden bg-sidebar border-b border-sidebar-border sticky top-0 z-50">
+      <div className="flex items-center justify-between h-16 px-4">
+        <h1 className="text-lg font-bold text-sidebar-foreground">{t.appName}</h1>
+
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-sidebar-foreground">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side={isRTL ? 'left' : 'right'} className="w-72">
+              <SheetHeader>
+                <SheetTitle>{t.menu}</SheetTitle>
+              </SheetHeader>
+
+              <nav className="flex flex-col gap-2 mt-6">
+                {navigationItems.map((item) => (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent transition-colors"
+                    activeClassName="bg-accent font-medium"
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span>{t[item.labelKey]}</span>
+                  </NavLink>
+                ))}
+
+                <div className="mt-4 pt-4 border-t">
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      onLogout();
+                      setOpen(false);
+                    }}
+                    className="w-full justify-start gap-3"
+                  >
+                    <LogOut className="h-5 w-5" />
+                    <span>{t.logout}</span>
+                  </Button>
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </header>
+  );
+};

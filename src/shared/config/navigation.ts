@@ -2,11 +2,11 @@ import { LayoutDashboard, History, LucideIcon } from 'lucide-react';
 
 export interface NavigationItem {
   path: string;
-  labelKey: 'dashboard' | 'history';
   icon: LucideIcon;
+  labelKey: 'dashboard' | 'history';
 }
 
 export const navigationItems: NavigationItem[] = [
-  { path: '/dashboard', labelKey: 'dashboard', icon: LayoutDashboard },
-  { path: '/history', labelKey: 'history', icon: History },
+  { path: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
+  { path: '/history', icon: History, labelKey: 'history' },
 ];

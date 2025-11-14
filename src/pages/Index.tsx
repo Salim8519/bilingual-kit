@@ -44,8 +44,8 @@ const Index = () => {
   const t = translations[language];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
-      <div className="absolute top-4 right-4 ltr:right-4 rtl:left-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <div className="absolute top-4 ltr:right-4 rtl:left-4 z-10">
         <LanguageSwitcher />
       </div>
       

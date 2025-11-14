@@ -1,18 +1,16 @@
 export const translations = {
   en: {
     appName: 'My App',
-    navigation: 'Navigation',
+    menu: 'Menu',
     dashboard: 'Dashboard',
     history: 'History',
     logout: 'Logout',
-    openMenu: 'Open menu',
   },
   ar: {
     appName: 'تطبيقي',
-    navigation: 'التنقل',
+    menu: 'القائمة',
     dashboard: 'لوحة التحكم',
     history: 'السجل',
     logout: 'تسجيل الخروج',
-    openMenu: 'فتح القائمة',
   },
 };
