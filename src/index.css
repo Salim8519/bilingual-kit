@@ -167,9 +167,14 @@ All colors MUST be HSL.
 
   /* Disable sticky hover on touch devices for outline/ghost buttons */
   @media (hover: none) and (pointer: coarse) {
-    .btn-no-touch-hover:hover {
+    .btn-no-touch-hover,
+    .btn-no-touch-hover:hover,
+    .btn-no-touch-hover:active,
+    .btn-no-touch-hover:focus {
       background-color: transparent !important;
       color: inherit !important;
+      transition: none !important;
+      box-shadow: none !important;
     }
   }
 }
