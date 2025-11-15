@@ -1,6 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
+// Page Orchestrator: This file only coordinates components, hooks, and context.
+// No business logic, UI components, or translations should be defined here.
 const NotFound = () => {
   const location = useLocation();
 

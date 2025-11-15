@@ -7,6 +7,8 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle/ThemeToggle';
 import { Palette, Globe, Info, Settings as SettingsIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
+// Page Orchestrator: This file only coordinates components, hooks, and context.
+// No business logic, UI components, or translations should be defined here.
 export default function Settings() {
   const { language } = useLanguage();
   const t = translations[language];

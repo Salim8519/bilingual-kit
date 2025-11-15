@@ -5,6 +5,8 @@ import { HistoryFilters } from './components/HistoryFilters';
 import { useHistoryFilters } from './hooks/useHistoryFilters';
 import { translations } from './translations';
 
+// Page Orchestrator: This file only coordinates components, hooks, and context.
+// No business logic, UI components, or translations should be defined here.
 const History = () => {
   const { language } = useLanguage();
   const t = translations[language];

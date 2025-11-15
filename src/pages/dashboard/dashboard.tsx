@@ -4,6 +4,8 @@ import { StatsGrid } from './components/StatsGrid';
 import { RecentActivity } from './components/RecentActivity';
 import { translations } from './translations';
 
+// Page Orchestrator: This file only coordinates components, hooks, and context.
+// No business logic, UI components, or translations should be defined here.
 const Dashboard = () => {
   const { language } = useLanguage();
   const t = translations[language];
