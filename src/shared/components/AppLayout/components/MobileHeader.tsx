@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink } from '@/components/NavLink';
 import { useLanguage } from '@/shared/context/LanguageContext';
 import { useGlobalAlert } from '@/shared/context/GlobalAlertContext';
@@ -20,7 +20,29 @@ export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
   const { showAlert } = useGlobalAlert();
   const t = translations[language];
   const [open, setOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const isRTL = language === 'ar';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show header when scrolling up or at top
+      if (currentScrollY < lastScrollY.current || currentScrollY < 10) {
+        setIsVisible(true);
+      } 
+      // Hide header when scrolling down (after 10px to avoid sensitivity)
+      else if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        setIsVisible(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogoutClick = () => {
     setOpen(false);
@@ -35,7 +57,11 @@ export const MobileHeader = ({ onLogout }: MobileHeaderProps) => {
   };
 
   return (
-    <header className="md:hidden bg-sidebar border-b border-sidebar-border sticky top-0 z-50">
+    <header 
+      className={`md:hidden bg-sidebar border-b border-sidebar-border fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <div className={`flex items-center justify-between h-16 px-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
         <h1 className="text-lg font-bold text-sidebar-foreground">{t.appName}</h1>
 

@@ -34,7 +34,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
       </div>
 
       {/* Mobile Content */}
-      <main className="md:hidden">
+      <main className="md:hidden pt-16">
         {children}
       </main>
     </div>
