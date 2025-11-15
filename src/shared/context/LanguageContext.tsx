@@ -12,27 +12,36 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize with Arabic for instant render (ultra-fast)
-  const [language, setLanguageState] = useState<Language>('ar');
-  const [isInitialized, setIsInitialized] = useState(false);
+  // Initialize with localStorage for INSTANT zero-flicker render
+  const [language, setLanguageState] = useState<Language>(() => {
+    const cached = localStorage.getItem('language');
+    const initialLanguage = (cached === 'ar' || cached === 'en') ? cached : 'ar';
+    
+    // Apply language immediately to prevent flicker
+    const dir = initialLanguage === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.setAttribute('dir', dir);
+    document.documentElement.setAttribute('lang', initialLanguage);
+    
+    return initialLanguage;
+  });
 
-  // Load saved language from IndexedDB on mount (blazing fast background load)
+  // Sync with IndexedDB in background (persistent storage)
   useEffect(() => {
-    const loadLanguage = async () => {
+    const syncLanguage = async () => {
       const saved = await storage.indexed.get<Language>('language');
-      const finalLanguage = saved || 'ar';
       
-      setLanguageState(finalLanguage);
-      
-      // Apply language to DOM
-      const dir = finalLanguage === 'ar' ? 'rtl' : 'ltr';
-      document.documentElement.setAttribute('dir', dir);
-      document.documentElement.setAttribute('lang', finalLanguage);
-      
-      setIsInitialized(true);
+      // If IndexedDB has a value different from localStorage, use it
+      if (saved && saved !== language) {
+        setLanguageState(saved);
+        localStorage.setItem('language', saved);
+        
+        const dir = saved === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+        document.documentElement.setAttribute('lang', saved);
+      }
     };
     
-    loadLanguage();
+    syncLanguage();
   }, []);
 
   const setLanguage = async (lang: Language) => {
@@ -44,7 +53,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     document.documentElement.setAttribute('dir', dir);
     document.documentElement.setAttribute('lang', lang);
     
-    // Persist to IndexedDB in background
+    // Persist to both storages (localStorage for instant load, IndexedDB for reliability)
+    localStorage.setItem('language', lang);
     await storage.indexed.set('language', lang);
   };
 
