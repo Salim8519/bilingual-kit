@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { storage } from '@/shared/utils/storage';
 
 type Language = 'en' | 'ar';
 
@@ -11,22 +12,43 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('language');
-    return (saved === 'ar' || saved === 'en') ? saved : 'ar';
-  });
+  // Initialize with Arabic for instant render (ultra-fast)
+  const [language, setLanguageState] = useState<Language>('ar');
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const setLanguage = (lang: Language) => {
+  // Load saved language from IndexedDB on mount (blazing fast background load)
+  useEffect(() => {
+    const loadLanguage = async () => {
+      const saved = await storage.indexed.get<Language>('language');
+      const finalLanguage = saved || 'ar';
+      
+      setLanguageState(finalLanguage);
+      
+      // Apply language to DOM
+      const dir = finalLanguage === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.setAttribute('dir', dir);
+      document.documentElement.setAttribute('lang', finalLanguage);
+      
+      setIsInitialized(true);
+    };
+    
+    loadLanguage();
+  }, []);
+
+  const setLanguage = async (lang: Language) => {
+    // Update state immediately (instant visual feedback)
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
+    
+    // Apply to DOM
+    const dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.setAttribute('dir', dir);
+    document.documentElement.setAttribute('lang', lang);
+    
+    // Persist to IndexedDB in background
+    await storage.indexed.set('language', lang);
   };
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';
-
-  useEffect(() => {
-    document.documentElement.setAttribute('dir', dir);
-    document.documentElement.setAttribute('lang', language);
-  }, [language, dir]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, dir }}>
