@@ -10,6 +10,8 @@ import { translations } from './translations';
 
 const GITHUB_REPO_URL = 'https://github.com/Salim8519/bilingual-kit';
 
+// Page Orchestrator: This file only coordinates components, hooks, and context.
+// No business logic, UI components, or translations should be defined here.
 export default function Home() {
   const navigate = useNavigate();
   const { language } = useLanguage();
