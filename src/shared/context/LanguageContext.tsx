@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { storage } from '@/shared/utils/storage';
 
 type Language = 'en' | 'ar';
@@ -14,8 +14,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Initialize with localStorage for INSTANT zero-flicker render
   const [language, setLanguageState] = useState<Language>(() => {
-    const cached = localStorage.getItem('language');
-    const initialLanguage = (cached === 'ar' || cached === 'en') ? cached : 'ar';
+    const saved = storage.local.get<Language>('language');
+    const initialLanguage = saved || 'ar';
     
     // Apply language immediately to prevent flicker
     const dir = initialLanguage === 'ar' ? 'rtl' : 'ltr';
@@ -25,26 +25,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return initialLanguage;
   });
 
-  // Sync with IndexedDB in background (persistent storage)
-  useEffect(() => {
-    const syncLanguage = async () => {
-      const saved = await storage.indexed.get<Language>('language');
-      
-      // If IndexedDB has a value different from localStorage, use it
-      if (saved && saved !== language) {
-        setLanguageState(saved);
-        localStorage.setItem('language', saved);
-        
-        const dir = saved === 'ar' ? 'rtl' : 'ltr';
-        document.documentElement.setAttribute('dir', dir);
-        document.documentElement.setAttribute('lang', saved);
-      }
-    };
-    
-    syncLanguage();
-  }, []);
-
-  const setLanguage = async (lang: Language) => {
+  const setLanguage = (lang: Language) => {
     // Update state immediately (instant visual feedback)
     setLanguageState(lang);
     
@@ -53,9 +34,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     document.documentElement.setAttribute('dir', dir);
     document.documentElement.setAttribute('lang', lang);
     
-    // Persist to both storages (localStorage for instant load, IndexedDB for reliability)
-    localStorage.setItem('language', lang);
-    await storage.indexed.set('language', lang);
+    // Persist to localStorage
+    storage.local.set('language', lang);
   };
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';

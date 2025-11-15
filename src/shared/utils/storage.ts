@@ -1,4 +1,4 @@
-// Heavy-lifting storage utility for sessionStorage and IndexedDB
+// Storage utility for sessionStorage, localStorage, and IndexedDB
 // Developers can use this with just 2 lines of code
 
 const DB_NAME = 'AppStorage';
@@ -63,6 +63,43 @@ class StorageManager {
         sessionStorage.clear();
       } catch (error) {
         console.error('SessionStorage clear error:', error);
+      }
+    }
+  };
+
+  // LocalStorage operations
+  local = {
+    set: <T>(key: string, value: T): void => {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (error) {
+        console.error('LocalStorage set error:', error);
+      }
+    },
+
+    get: <T>(key: string): T | null => {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : null;
+      } catch (error) {
+        console.error('LocalStorage get error:', error);
+        return null;
+      }
+    },
+
+    remove: (key: string): void => {
+      try {
+        localStorage.removeItem(key);
+      } catch (error) {
+        console.error('LocalStorage remove error:', error);
+      }
+    },
+
+    clear: (): void => {
+      try {
+        localStorage.clear();
+      } catch (error) {
+        console.error('LocalStorage clear error:', error);
       }
     }
   };
