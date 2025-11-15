@@ -11,29 +11,40 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize with light theme for instant render (ultra-fast)
-  const [theme, setTheme] = useState<Theme>('light');
-  const [isInitialized, setIsInitialized] = useState(false);
+  // Initialize with localStorage for INSTANT zero-flicker render
+  const [theme, setTheme] = useState<Theme>(() => {
+    const cached = localStorage.getItem('theme');
+    const initialTheme = (cached === 'dark' || cached === 'light') ? cached : 'light';
+    
+    // Apply theme immediately to prevent flicker
+    if (initialTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    return initialTheme;
+  });
 
-  // Load saved theme from IndexedDB on mount (blazing fast background load)
+  // Sync with IndexedDB in background (persistent storage)
   useEffect(() => {
-    const loadTheme = async () => {
+    const syncTheme = async () => {
       const saved = await storage.indexed.get<Theme>('theme');
-      const finalTheme = saved || 'light';
       
-      setTheme(finalTheme);
-      
-      // Apply theme to DOM
-      if (finalTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+      // If IndexedDB has a value different from localStorage, use it
+      if (saved && saved !== theme) {
+        setTheme(saved);
+        localStorage.setItem('theme', saved);
+        
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
       }
-      
-      setIsInitialized(true);
     };
     
-    loadTheme();
+    syncTheme();
   }, []);
 
   const toggleTheme = async () => {
@@ -49,7 +60,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Update state
     setTheme(newTheme);
     
-    // Persist to IndexedDB in background
+    // Persist to both storages (localStorage for instant load, IndexedDB for reliability)
+    localStorage.setItem('theme', newTheme);
     await storage.indexed.set('theme', newTheme);
   };
 
