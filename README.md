@@ -28,7 +28,7 @@ GlobalAlertContext → showAlert({ title, message, confirmText, type, buttonDela
 - **ONE** global language provider controls all translations
 - **ONE** global theme provider controls light/dark mode
 - **GlobalAlert**: Use `useGlobalAlert().showAlert()` for confirmation dialogs with timed buttons (default 1s delay). Supports `type: 'danger' | 'warning' | 'info'` and custom `buttonDelay` (0 = instant).
-- **Storage**: Use `useSessionStorage(key, default)` or `useIndexedDB(key, default)` for client-side data with 2 lines of code. Direct access: `storage.session.set/get()` or `storage.indexed.set/get()`.
+- **Storage**: Use `useSessionStorage(key, default)` or `useIndexedDB(key, default)` for client-side data with 2 lines of code. Direct access: `storage.session.set/get()`, `storage.local.set/get()`, or `storage.indexed.set/get()`. Prefer `localStorage` for instant loads (theme, language), use `IndexedDB` for background data persistence.
 - ALL pages and components consume via hooks: `useLanguage()`, `useTheme()`, `useGlobalAlert()`
 
 ### 2. Strict Folder Structure (MANDATORY)
