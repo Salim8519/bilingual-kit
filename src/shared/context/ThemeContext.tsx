@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { storage } from '@/shared/utils/storage';
 
 type Theme = 'light' | 'dark';
 
@@ -10,51 +11,47 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem('theme');
-    
-    // Default to light mode if no saved preference
-    if (!saved) {
-      localStorage.setItem('theme', 'light');
-      document.documentElement.classList.remove('dark');
-      return 'light';
-    }
-    
-    // Apply dark class immediately if saved theme is dark
-    if (saved === 'dark') {
-      document.documentElement.classList.add('dark');
-      return 'dark';
-    }
-    
-    // Ensure light mode
-    document.documentElement.classList.remove('dark');
-    return 'light';
-  });
+  // Initialize with light theme for instant render (ultra-fast)
+  const [theme, setTheme] = useState<Theme>('light');
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const toggleTheme = () => {
-    setTheme((prev) => {
-      const newTheme = prev === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme);
+  // Load saved theme from IndexedDB on mount (blazing fast background load)
+  useEffect(() => {
+    const loadTheme = async () => {
+      const saved = await storage.indexed.get<Theme>('theme');
+      const finalTheme = saved || 'light';
       
-      // Apply theme to document immediately
-      if (newTheme === 'dark') {
+      setTheme(finalTheme);
+      
+      // Apply theme to DOM
+      if (finalTheme === 'dark') {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
       
-      return newTheme;
-    });
-  };
+      setIsInitialized(true);
+    };
+    
+    loadTheme();
+  }, []);
 
-  useEffect(() => {
-    // Ensure theme is applied on mount
-    if (theme === 'dark') {
+  const toggleTheme = async () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    
+    // Apply theme to DOM immediately (instant visual feedback)
+    if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, []);
+    
+    // Update state
+    setTheme(newTheme);
+    
+    // Persist to IndexedDB in background
+    await storage.indexed.set('theme', newTheme);
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
